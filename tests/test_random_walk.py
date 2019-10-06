@@ -1,3 +1,5 @@
+import subprocess
+
 import numpy as np
 import pytest
 from gym import utils
@@ -173,3 +175,15 @@ def test_render_agent_pos_in_green_when_reaching_goal(env, make_walk_string, wal
     all(_ for _ in until_done(env, 1))
     env.render()
     assert capstdout.read() == "(Right)\n" + make_walk_string(agent_pos=walk_len - 1, color='green') + "\n"
+
+
+def test_random_walk_example(request, capstdout):
+    example = request.session.fspath / "examples/random_walk.py"
+    lines = run_example(example)
+    assert "Observation: " in last(lines)
+
+
+def run_example(example):
+    r = subprocess.run(['python', example], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    lines = r.stdout.decode('utf-8').splitlines()
+    return lines

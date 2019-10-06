@@ -1,0 +1,20 @@
+digraph {
+  rankdir="LR";
+  overlap=false;
+  edge [dir="both"]
+  a
+  b
+  c
+  d
+  e
+  f
+  g[label="", fillcolor=green, shape=box style=filled];
+
+  a -> a[label="-1"];
+  a -> b[label="-1"];
+  b -> c[label="-1"];
+  c -> d[label="-1"];
+  d -> e[label="-1"];
+  e -> f[label="-1"];
+  f -> g[label="1"];
+}
