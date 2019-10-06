@@ -1,4 +1,4 @@
-.PHONY: help clean install
+.PHONY: help clean install test coverage
 
 TARGET ?=
 ifdef TARGET
@@ -13,6 +13,10 @@ help:
 	@echo "       install gym-quickcheck and dependencies in currently active environment"
 	@echo "make clean"
 	@echo "       clean all python build/compiliation files and directories"
+	@echo "make test"
+	@echo "       run all tests"
+	@echo "make coverage"
+	@echo "       run all tests and produce coverage report"
 
 clean:
 	find . -name '*.pyc' -exec rm --force {} +
@@ -27,3 +31,12 @@ install: clean
 	pip install --upgrade pip
 	pip install --upgrade setuptools
 	pip install $(install_instruction)
+
+test: install
+	pip install .[test]
+	pytest --verbose --color=yes .
+
+coverage: install
+	pip install .[test]
+	pip install pytest-cov
+	pytest --cov=gym_quickcheck --cov-report term-missing
