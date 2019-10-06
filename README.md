@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/SwamyDev/gym-quickcheck.svg?branch=master)](https://travis-ci.org/SwamyDev/gym-quickcheck) [![Coverage Status](https://coveralls.io/repos/github/SwamyDev/gym-quickcheck/badge.svg?branch=master)](https://coveralls.io/github/SwamyDev/gym-quickcheck?branch=master)
+[![Build Status](https://travis-ci.org/SwamyDev/gym-quickcheck.svg?branch=master)](https://travis-ci.org/SwamyDev/gym-quickcheck) [![Coverage Status](https://coveralls.io/repos/github/SwamyDev/gym-quickcheck/badge.svg?branch=master)](https://coveralls.io/github/SwamyDev/gym-quickcheck?branch=master) [![PyPI version](https://badge.fury.io/py/gym-quickcheck.svg)](https://badge.fury.io/py/gym-quickcheck)
 
 # gym-quickcheck
 Many bugs and implementation errors can already be spotted by running the agent in relatively simple environments. This gym extension provides environments which run fast even on low spec VMs and can be used in Continuous Integration tests. This project aims to help improve code quality and stability of Reinforcement Learning algorithms by providing additional means for automated testing.
