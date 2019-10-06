@@ -1,5 +1,12 @@
 .PHONY: help clean install
 
+TARGET ?=
+ifdef TARGET
+install_instruction = .[$(TARGET)]
+else
+install_instruction = .
+endif
+
 .DEFAULT: help
 help:
 	@echo "make install"
@@ -19,4 +26,4 @@ clean:
 install: clean
 	pip install --upgrade pip
 	pip install --upgrade setuptools
-	pip install .
+	pip install $(install_instruction)
