@@ -22,6 +22,7 @@ help:
 
 meta:
 	python meta.py `git describe --tags --abbrev=0`
+	scripts/embedmd -w README.md
 
 clean:
 	find . -name '*.pyc' -exec rm --force {} +

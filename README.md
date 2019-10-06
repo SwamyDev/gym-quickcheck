@@ -20,10 +20,21 @@ env = gym.make('gym_quickcheck:random-walk-v0')
 done = False
 observation = env.reset()
 while not done:
+    env.render()
     observation, reward, done, info = env.step(env.action_space.sample())
-    print(f"Observation: {observation}, Reward{reward}")
+    print(f"Observation: {observation}, Reward: {reward}")
 ```
 
+Running the example should produce an output similar to this:
+```
+...
+(Left)
+#######
+Observation: [0. 0. 0. 0. 0. 1. 0.], Reward: -1
+(Right)
+#######
+Observation: [0. 0. 0. 0. 0. 0. 1.], Reward: 1
+```
 ## Random Walk
 This random walk environment is similar to the one described in [Reinforcement Learning An Introduction](http://incompleteideas.net/book/the-book-2nd.html). It differs in having max episode length instead of terminating at both ends, and in penalizing each step except the goal.
 
