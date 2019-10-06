@@ -1,4 +1,4 @@
-.PHONY: help clean install test coverage
+.PHONY: help meta install clean test coverage
 
 TARGET ?=
 ifdef TARGET
@@ -9,6 +9,8 @@ endif
 
 .DEFAULT: help
 help:
+	@echo "make meta"
+	@echo "       update version number and meta data"
 	@echo "make install"
 	@echo "       install gym-quickcheck and dependencies in currently active environment"
 	@echo "make clean"
@@ -17,6 +19,9 @@ help:
 	@echo "       run all tests"
 	@echo "make coverage"
 	@echo "       run all tests and produce coverage report"
+
+meta:
+	python meta.py `git describe --tags --abbrev=0`
 
 clean:
 	find . -name '*.pyc' -exec rm --force {} +
