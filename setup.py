@@ -31,7 +31,7 @@ setup(
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
             'Topic :: Scientific/Engineering :: Artificial Intelligence',
-            'Topic :: Software Development :: Testing'
+            'Topic :: Software Development :: Testing',
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 3',
       ],
