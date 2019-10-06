@@ -11,6 +11,7 @@ pip install .
 
 ## Quick Start
 A random agent navigating the random walk environment, rendering a textual representation to the standard output:
+
 [embedmd]:# (examples/random_walk.py python)
 ```python
 import gym
