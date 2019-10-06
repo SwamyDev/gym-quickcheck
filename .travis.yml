@@ -1,19 +1,19 @@
 language: python
 python:
-  - '3.6'
+- '3.6'
 install:
-  - make install TARGET=test
+- make install TARGET=test
 script:
-  - pip install python-coveralls
-  - scripts/embedmd -d README.md
-  - make coverage
+- pip install python-coveralls
+- scripts/embedmd -d README.md
+- make coverage
 after_success:
-  - coveralls
+- coveralls
 deploy:
   provider: pypi
   user: SwamyDev
   password:
-    secure: Xv+8rvF1JMrl3SfKTacqWp0dAmAF47OF0ulphZUETkVffoZDgJ5hvSwEl9k+M+7C2OhTQR+RKFWYKdOa+oS726gBxrHu8ZTPprZ/ENwEyE6XMMTP0DqVOoXy/MeG+21pqktNnJ5aRMbHgFY9bdaTC3I608dpUozcNBDyf8SB3FoASeWUZtK0ikiHGQLCM7hF1cN5Jn9WRGtCEbtvFtoOSdCsUmShEr7QTWkH7mgwO8iAlsEwXsQbmg+l/uP8wNQoChjsDKAqL9JQ/Y58mg6GRUNeSHu1IGUXxzPUNVqTWF9jSTPn6pPF1lYeK4vymBZ8F2T1oo4EN6CV8thlvzYJwgcD3BU7eLWMhofKQ60pohivsVgq6N80DFDebU3XbDy4d2heSWmidwYVnOha0WyE1SZzLrfBtfmb+n2+ktSlMvKEJpRiv5gLuT4p1ShikLS2XG9Jx5Tdfaz/wXDAbNG3WHZu3g8iQEyBVCUCL3eJsD9qSasTjnhrVgANw9UX+TVD0DalVByi3TIP5jjOpH6cL5ayVRed2ot8HOK4gh1Zg/NMK7ycbWvskXJe3wiPQJFKpwzsrhwfcKKgqP4jK/W8HXb2VQdvBpjAxhcnY5UgEU6RM6OPm9HDVl7+K1jZrEkVT+aI6bE1r8Ocxl2+2CJsnRjD4V3xi60Rw8K7zBxkuA0=
+    secure: i16zIULstpz4RK3j/cuFm+WohZkbOCVxoFZbfwgvoTqQHs0KyipUB8uaF+1tZ5RxOnfDLsuiMh7MncheMVmWK7PrYW+dkQd9tPgdeOW+/5a8y717OObiMyAHNZIPbsnWkURv94+9YF+o+5up3qwNPSpzR7LF6fA3eU3T50GWYPAvW5+twFBEhG0cXXd0SQyQKItvBrSXyebEoOUuC9A4VcGK9WLhTRRIsbkEhE6Lro3Utalff6V8yO9dfu+Cmq3Tg1TMnEHzoJYLVGq/8XaO8Xsibtlqhj/LkmT0XRmmKS9Ukpq+pbyO+gmErsLRhzrGs4d6S6wnYvDY8+mm6raabKcHIYM3eEaggIvilLcs//mCH/4h+uS5b0JZEMeiX2Q4rsR4+hI9mzxtkTB84JP4ovwCm15HA2HVMbSZ325kh7GSI4JoBS+vBk7mYjvx0NNTj02a9ONO0asmNZiyzif68OOtx5RKIy1nroXAJ/2B0jbXHli3ViO+SHQsF2oSWDvPbHv2IEeaWJ8UxO7SWTI/dCcgujdzXCfjzJzqMF1UksDygIk1c+3RhYxhhZ6ZgYPMBqwWABX5D5Q5kk6BCT5dtsH/clcgnb1+MZ7CIqZ0kl6v96taR3hsBW5gFmTTQ1orZ7i+PVni5RGG0pNZWrmokL8eSNNoUTiomEEQ9TdSJs0=
   on:
     tags: true
-  distributions: "sdist bdist_wheel"
+  distributions: sdist bdist_wheel
