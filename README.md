@@ -4,9 +4,9 @@
 Many bugs and implementation errors can already be spotted by running the agent in relatively simple environments. This gym extension provides environments which run fast even on low spec VMs and can be used in Continuous Integration tests. This project aims to help improve code quality and stability of Reinforcement Learning algorithms by providing additional means for automated testing.
 
 ## Installation
-You can install from source using pip:
+You can install the package using pip:
 ```bash
-pip install .
+pip install gym-quickcheck
 ```
 
 ## Quick Start

@@ -35,7 +35,7 @@ setup(
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 3',
       ],
-      packages=find_packages(include='gym_quickcheck'),
+      packages=find_packages(exclude=['build', 'dist', 'reinforcement.egg-info', 'assets', 'scrips', 'tests']),
       install_requires=['gym'],
       extras_require={'test': ['pytest']},
       keywords='OpeanAI gym testing continuous integration',

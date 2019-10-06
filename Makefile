@@ -2,9 +2,9 @@
 
 TARGET ?=
 ifdef TARGET
-install_instruction = -e .[$(TARGET)]
+install_instruction = .[$(TARGET)]
 else
-install_instruction = -e .
+install_instruction = .
 endif
 
 .DEFAULT: help
@@ -39,10 +39,10 @@ install: clean
 	pip install $(install_instruction)
 
 test: install
-	pip install -e .[test]
+	pip install .[test]
 	pytest --verbose --color=yes .
 
 coverage: install
-	pip install -e .[test]
+	pip install .[test]
 	pip install pytest-cov
 	pytest --cov=gym_quickcheck --cov-report term-missing
