@@ -1,6 +1,6 @@
 import gym
 
-env = gym.make('gym_quickcheck:random-walk-v0')
+env = gym.make('gym_quickcheck:alternation-v0')
 done = False
 observation = env.reset()
 while not done:
