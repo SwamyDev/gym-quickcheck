@@ -39,17 +39,6 @@ def sample_reset(env, obs_shape):
 
 
 @pytest.fixture
-def sample_signal():
-    def sample_signal_func(func, n):
-        total = 0
-        for _ in range(n):
-            total += unpack_reward(func())
-        return total / n
-
-    return sample_signal_func
-
-
-@pytest.fixture
 def alternate_right_left():
     direction = 0
 
@@ -82,8 +71,8 @@ def test_adherence_to_gym_contract(env, gym_interface, gym_properties):
 
 
 def test_agent_starts_randomly_left_or_right(sample_reset):
-    avg_obs = sample_reset(100)
-    assert left(avg_obs) == approx(0.5, abs=1) and right(avg_obs) == approx(0.5, abs=1)
+    avg_obs = sample_reset(10000)
+    assert left(avg_obs) == approx(0.5, rel=0.1) and right(avg_obs) == approx(0.5, rel=0.1)
 
 
 def left(obs):
