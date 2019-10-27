@@ -8,3 +8,8 @@ register(
     id='random-walk-v0',
     entry_point='gym_quickcheck.envs:RandomWalkEnv',
 )
+
+register(
+    id='alternation-v0',
+    entry_point='gym_quickcheck.envs:AlternationEnv',
+)

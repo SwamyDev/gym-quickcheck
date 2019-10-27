@@ -1,0 +1,11 @@
+digraph {
+    rankdir = "LR";
+    overlap = false;
+    a
+    b
+
+    a -> a [label = "N(-1, 0.1)"];
+    b -> b [label = "N(-1, 0.1)"];
+    a -> b [label = "N(1, 0.1)"];
+    b -> a [label = "N(1, 0.1)"];
+}
