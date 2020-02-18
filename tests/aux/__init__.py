@@ -67,10 +67,10 @@ def unpack_done(step_tuple):
     return step_tuple[2]
 
 
-def until_done(env, direction):
+def until_done(env, action):
     done = False
     while not done:
-        a = direction if isinstance(direction, int) else direction()
+        a = action if isinstance(action, int) else action()
         o, r, done, _ = env.step(a)
         yield o, r, done, _
 

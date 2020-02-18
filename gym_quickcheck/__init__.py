@@ -13,3 +13,8 @@ register(
     id='alternation-v0',
     entry_point='gym_quickcheck.envs:AlternationEnv',
 )
+
+register(
+    id='n-knob-v0',
+    entry_point='gym_quickcheck.envs:NKnobEnv',
+)
