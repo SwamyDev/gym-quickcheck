@@ -6,7 +6,7 @@ from tests.aux import until_done
 
 @pytest.fixture(scope='session')
 def gym_interface():
-    return [('reset', ()), ('step', (0,)), ('render', ()), ('close', ())]
+    return [('reset', ()), ('render', ()), ('step', (0,)), ('close', ())]
 
 
 @pytest.fixture(scope='session')
