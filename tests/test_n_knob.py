@@ -20,9 +20,10 @@ def idle():
 
 @pytest.fixture
 def make_knob_string(env):
-    def knob_fac(action, color='red'):
+    def knob_fac(action):
         s = []
         for k, a in zip(env.knobs, action):
+            color = 'green' if abs(k - a) < env.sensitivity else 'red'
             s.append(utils.colorize(f"({k:.3f}/{a:.3f})", color=color, highlight=True))
         return " ".join(s)
 
@@ -113,7 +114,7 @@ def test_render_writes_current_state_to_stdout(env, make_knob_string, capstdout)
     assert capstdout.read() == make_knob_string(make_action([1, 1, 1, 1, 1, 1, 1])) + "\n"
     env.step(env.knobs)
     env.render()
-    assert capstdout.read() == make_knob_string(env.knobs, color='green') + "\n"
+    assert capstdout.read() == make_knob_string(env.knobs) + "\n"
 
 
 def test_n_knob_example(request, capstdout):
