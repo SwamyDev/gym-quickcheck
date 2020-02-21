@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 from gym import utils
 from more_itertools import last
+from pytest import approx
 
 from gym_quickcheck.envs.n_knob_env import NKnobEnv, ResetError
 from tests.aux import assert_that, follows_contract, assert_obs_eq, until_done, unpack_done, unpack_reward, unpack_obs, \
@@ -14,8 +15,8 @@ def env():
 
 
 @pytest.fixture
-def idle():
-    return make_action([0, 0, 0, 0, 0, 0, 0])
+def idle(env):
+    return make_action(np.zeros_like(env.knobs))
 
 
 @pytest.fixture
@@ -40,8 +41,8 @@ def test_adherence_to_gym_contract(env, gym_interface, gym_properties):
 
 def test_initial_observation_is_direction_from_zero(env):
     env.seed(42)
-    assert_obs_eq(env.reset(), make_obs([-1, -1, 1, -1, 1, 1, -1]))
-    assert_obs_eq(env.reset(), make_obs([-1, -1, 1, 1, 1, -1, 1]))
+    assert_obs_eq(env.reset(), make_obs([-1, -0, 1]))
+    assert_obs_eq(env.reset(), make_obs([-0, 1, 1]))
 
 
 def make_obs(values):
@@ -53,8 +54,9 @@ def test_raise_error_when_stepping_without_resetting(env, idle):
         env.step(idle)
 
 
-def test_reward_range_is_from_negative_max_steps_to_minus_one(env):
-    assert env.reward_range == (-env.max_len, -1)
+def test_reward_range_is_dependent_on_length_and_knobs(env):
+    env.reset()
+    assert env.reward_range == (-env.max_len * 2 * len(env.knobs), 0)
 
 
 def test_has_a_max_episode_length(env, idle):
@@ -70,12 +72,14 @@ def test_not_done_until_finished_or_reset(env, idle):
     assert not unpack_done(env.step(idle))
 
 
-def test_each_step_gives_a_reward_of_minus_one(env, idle):
+def test_each_step_gives_as_reward_the_distance_to_the_knobs(env):
     env.reset()
-    assert unpack_reward(env.step(idle)) == -1
+    act = np.random.rand(env.knobs.shape[0])
+    assert unpack_reward(env.step(act)) == -np.linalg.norm(env.knobs - act)
 
 
 def test_observation_from_step_indicates_direction_of_solution(env, idle):
+    env.seed(42)
     initial = env.reset()
     assert_obs_eq(unpack_obs(env.step(idle)), initial)
     assert_obs_eq(unpack_obs(env.step(initial)), initial * -1)
@@ -83,35 +87,30 @@ def test_observation_from_step_indicates_direction_of_solution(env, idle):
 
 def test_setting_the_knobs_to_their_correct_value_solves_the_environment(env):
     env.reset()
-    obs, _, done, _ = env.step(env.knobs)
+    obs, reward, done, _ = env.step(env.knobs)
     assert done
     assert_obs_eq(obs, np.zeros_like(obs))
+    assert reward == approx(0.0)
 
 
-def test_solving_by_walking_in_correct_direction(env):
-    obs = env.reset()
-    total_reward = 0
-    done = False
-    estimate = obs * 0.01
-    while not done:
-        obs, r, done, _ = env.step(estimate)
-        total_reward += r
-        estimate += obs * 0.01
-
-    assert total_reward >= -101
+def test_solving_by_within_sensitivity(env):
+    env.reset()
+    epsilon = env.observation_space.sample() * env.sensitivity * 0.999
+    obs, r, done, _ = env.step(env.knobs + epsilon)
+    assert done
 
 
-def test_on_average_random_agent_performs_at_minimum_reward(env, sample_average_reward):
-    assert sample_average_reward(env, 100) <= env.reward_range[0]
+def test_on_average_random_agent_performs_poorly(env, sample_average_reward):
+    assert sample_average_reward(env, 100) <= -env.max_len * 0.9
 
 
 def test_render_writes_current_state_to_stdout(env, make_knob_string, capstdout):
     env.reset()
     env.render()
-    assert capstdout.read() == make_knob_string(make_action([0, 0, 0, 0, 0, 0, 0])) + "\n"
-    env.step(make_action([1, 1, 1, 1, 1, 1, 1]))
+    assert capstdout.read() == make_knob_string(make_action(np.zeros_like(env.knobs))) + "\n"
+    env.step(make_action(np.ones_like(env.knobs)))
     env.render()
-    assert capstdout.read() == make_knob_string(make_action([1, 1, 1, 1, 1, 1, 1])) + "\n"
+    assert capstdout.read() == make_knob_string(make_action(np.ones_like(env.knobs))) + "\n"
     env.step(env.knobs)
     env.render()
     assert capstdout.read() == make_knob_string(env.knobs) + "\n"

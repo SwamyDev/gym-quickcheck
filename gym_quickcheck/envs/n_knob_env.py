@@ -9,17 +9,17 @@ from gym.utils import seeding
 class NKnobEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, n=7):
+    def __init__(self, n=3):
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(n,), dtype=np.float32)
         self.observation_space = spaces.Box(low=-1, high=1, shape=(n,), dtype=np.int8)
         self._num_knobs = n
-        self._max_len = 200
-        self._sensitivity = 0.01
+        self._max_len = 10
+        self._sensitivity = 0.1
         self._knobs = None
         self._elapsed_steps = None
         self._last_action = np.zeros((n,))
         self.seed()
-        self.reward_range = (-self.max_len, -1)
+        self.reward_range = (-self.max_len * 2 * n, 0)
 
     @property
     def max_len(self):
@@ -55,9 +55,10 @@ class NKnobEnv(gym.Env):
         obs = self._make_observation(self._knobs - action)
         self._last_action = action
 
+        reward = -np.linalg.norm(self._knobs - action)
         has_max_len = self._elapsed_steps == self.max_len
         is_finished = (obs == np.zeros_like(obs)).all()
-        return obs, -1, has_max_len or is_finished, None
+        return obs, reward, has_max_len or is_finished, None
 
     def render(self, mode='human'):
         s = []
